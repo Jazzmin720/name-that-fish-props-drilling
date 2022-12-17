@@ -5,6 +5,7 @@ const correctCount = 0;
 const answersLeft = ["trout", "salmon", "shark", "tuna"];
 
 export const ScoreBoard = () => {
+  
   return (
     <div id="score-board">
       <div>Incorrect 🔻: {incorrectCount}</div>
