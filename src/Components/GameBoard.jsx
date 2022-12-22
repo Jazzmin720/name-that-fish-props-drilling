@@ -1,8 +1,8 @@
-import React,{useContext,useEffect,useState} from 'react';
+import React, {useContext,useState} from 'react';
 import "./styles/game-board.css";
 import { Images } from "../assets/images";
 import {AppContext} from '../Context';
-//import {ContextProvider} from '../Context';
+
 
 
 const initialFishes = [
@@ -28,27 +28,31 @@ const initialFishes = [
 
 
 
-export const GameBoard = (props) => {
-  const nextFishToName = initialFishes[0];
-  const [state,setState] = useState("old state")
- 
- //state us currently being pulled from App.jsx provider
-  const useTheState = useContext(AppContext);
+
+export const GameBoard = () => {
+  //state is currently being pulled from the context.jsx provider and is set to {value}
+  const {value} = useContext(AppContext)
   
+  const nextFishToName = initialFishes[0];
+  //to change state in this component, we have to initialize the state to be the same as the value being pulled from context.jsx
+  const [state,setState] = useState({value})
  
   //handle what happens when you submit the form
    let handleSubmit = (e) => {
     e.preventDefault();
-    console.log({state})
+    
+    if({value}){
+      console.log(state)
+    }
     
   }
 
   //change the state with each keypress
-  let changeTheState = (e)  => {
+  /*let changeTheState = (e)  => {
     e.preventDefault();
     setState(e.target.value)
     console.log(state)
-  }
+  }*/
 
   
    
@@ -60,18 +64,25 @@ export const GameBoard = (props) => {
 
 
   return (
+    
     <div id="game-board">
       <div id="fish-container">
         <img src={nextFishToName.url} alt={nextFishToName.name} />
       </div>
+     
       <form id="fish-guess-form" onSubmit={handleSubmit} >
+      
         <label htmlFor="fish-guess">What kind of fish is this?</label>
-        <input type="text" name="fish-guess" onChange = {changeTheState} />
-        {console.log(state)}
+        <input type="text" name="fish-guess" onChange={(e) => setState(e.target.value)}  />
+       
         <input type="submit"   />
        
       </form>
+      
     </div>
+    
+    
+    
   );
 };
 
