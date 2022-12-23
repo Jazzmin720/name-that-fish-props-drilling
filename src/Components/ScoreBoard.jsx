@@ -1,5 +1,5 @@
-import React from 'react';
-//import { AppContext } from '../Context';
+import React ,{useContext} from 'react';
+import { AppContext } from '../Context';
 import "./styles/score-board.css";
 
 
@@ -10,15 +10,15 @@ const answersLeft = ["trout", "salmon", "shark", "tuna"];
 
 export const ScoreBoard = () => {
   //set the state here
-
-  ///not getting data from the provider
+  const {value} = useContext(AppContext)
+  console.log({value})
   
   return (
     <div id="score-board">
       <div>Incorrect 🔻: {incorrectCount}</div>
       <div id="choices-left">
         {answersLeft.map((answer) => (
-          <div key={answer} className="choice" id={answer}>
+          <div key={answer} className="choice" >
             {answer}
           </div>
         ))}

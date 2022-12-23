@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       
       <header>
-        <ScoreBoard />
+       
         <GameBoard />
       </header>
       
