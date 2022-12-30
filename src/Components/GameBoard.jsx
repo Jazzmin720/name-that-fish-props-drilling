@@ -105,12 +105,7 @@ export const GameBoard = () => {
         setRemoved("trout") //div that we want removed   //WHILE LOOP FOR THIS?
         incrementCount();
         removeTroutDiv();
-        
-      }else if("salmon" == state && removed == "trout"){
-        setRemoved("salmon") //div that we want removed
-        incrementCount();
-        removeTroutDiv();
-        removeSalmonDiv();
+        setFish(initialFishes[1])
         
       }else if ("shark" == state && removed == "salmon"){
         setRemoved("shark") //div that we want removed
@@ -118,6 +113,14 @@ export const GameBoard = () => {
         removeTroutDiv();
         removeSalmonDiv();
         removeSharkDiv();
+        setFish(initialFishes[2])
+      }else if("salmon" == state && removed == "trout"){
+        setRemoved("salmon") //div that we want removed
+        incrementCount();
+        removeTroutDiv();
+        removeSalmonDiv();
+        setFish(initialFishes[3])
+        
       }else if("tuna" == state && removed == "shark"){
         setRemoved("tuna") //div that we want removed
         incrementCount();
@@ -129,12 +132,14 @@ export const GameBoard = () => {
         setRemoved("trout") //div that we want removed   //WHILE LOOP FOR THIS?
         incorrectIncrementCount();
         removeTroutDiv();
+        setFish(initialFishes[1])
        
       } else if (removed !== state && removed == "trout"){
         setRemoved("salmon") //div that we want removed   //WHILE LOOP FOR THIS?
         incorrectIncrementCount();
         removeTroutDiv();
         removeSalmonDiv();
+        setFish(initialFishes[3])
         
       } else if (removed !== state && removed == "salmon"){
         setRemoved("shark") //div that we want removed   //WHILE LOOP FOR THIS?
@@ -142,9 +147,17 @@ export const GameBoard = () => {
         removeTroutDiv();
         removeSalmonDiv();
         removeSharkDiv();
-      }
+        setFish(initialFishes[2])
+      }else if (removed !== state && removed == "shark"){
+        //setRemoved("shark") //div that we want removed   //WHILE LOOP FOR THIS?
+        incorrectIncrementCount();
+        removeTroutDiv();
+        removeSalmonDiv();
+        removeSharkDiv();
+        //setFish(initialFishes[3])
      
     } 
+  }
     
     console.log("removed:" + " " + removed)
 
