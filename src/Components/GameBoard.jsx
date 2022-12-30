@@ -27,31 +27,28 @@ const initialFishes = [
 
 const incorrectCount = 0;
 //let correctCount = 0;
-const stopCounter = true;
 
 
-//MAP THROUGH THE ANSWERS LEFT ARRAY TO SET THE NEXT FISH TO NAME
+
+
 
 
 
 export const GameBoard = () => {
   //state is currently being pulled from the context.jsx provider and is set to {value}
   const {value} = useContext(AppContext)
+  
+  //to change state in this component, we have to initialize the state to be the same as the value being pulled from context.jsx
   const [state,setState] = useState({value})
   const [count,setCount] = useState(0)
   const [incorrectCount, setIncorrectCount] = useState(0)
-  
-
- 
-  
+  const [fish,setFish] = useState(initialFishes[0]) //set fish to change the picture
   
   const answersLeft = ["trout", "salmon", "shark", "tuna"];
   
-  
-
-  
+  const [removed,setRemoved] = useState("")
   const nextFishToName = initialFishes[0];
-  //to change state in this component, we have to initialize the state to be the same as the value being pulled from context.jsx
+  
   
   
   //handle what happens when you submit the form
@@ -64,54 +61,101 @@ export const GameBoard = () => {
       setCount(count+1)
     }
 
-    let decrementCount = () => {
+    let incorrectIncrementCount = () => {
       setIncorrectCount(incorrectCount+1)
     }
     
     
-    console.log(answersLeft); //remove this when it works
-    if(nextFishToName.name == state){
-      const removedAnswer = answersLeft.shift();
-      
-        if(removedAnswer){
-          //removes the first choice from the scoreboard which comes from the answersLeft array
-          const removeDiv = () => {
-            const hideDiv = document.getElementById(removedAnswer)
-            hideDiv.style.display = "none";
-          }
-          removeDiv()
-          
-        }
-        
-      console.log(answersLeft.shift()) //remove this when it works
-      
-      console.log("correct") //remove this when it works
-      incrementCount()
-      console.log(count)
-      
-      
-    }else{
-      const removedAnswer = answersLeft.shift();
-        if(removedAnswer){
-          const removeDiv = () => {
-            const hideDiv = document.getElementById(removedAnswer)
-            hideDiv.style.display = "none";
-          }
-          removeDiv()
-        }
-      console.log(answersLeft.shift()) //remove this when it works
-      
-      console.log("incorrect") //remove this when it works
+    console.log("state is"+ " " + state)// remove when this works
+    
+   
+    
+    const removeDiv = () => {
+      const hideDiv = document.getElementById(removed)
+      hideDiv.style.display = "none";
+    }
+    
+    const removeTroutDiv = () => {
+      const hideDiv = document.getElementById("trout")
+      hideDiv.style.display = "none";
+    }
+    const removeSalmonDiv = () => {
+      const hideDiv = document.getElementById("salmon")
+      hideDiv.style.display = "none";
+    }
+    const removeTunaDiv = () => {
+      const hideDiv = document.getElementById("tuna")
+      hideDiv.style.display = "none";
+      //console.log("answer removed:" + " "+ removed)
+    }
+    const removeSharkDiv = () => {
+      const hideDiv = document.getElementById("shark")
+      hideDiv.style.display = "none";
+      //console.log("answer removed:" + " "+ removed)
+    }
 
-      decrementCount()
-      console.log(incorrectCount)
+
+    //update the score
+    
+    //if the removed index is equal to the states
+    
+    
+    
+    if("trout" == state){
+        setRemoved("trout") //div that we want removed   //WHILE LOOP FOR THIS?
+        incrementCount();
+        removeTroutDiv();
+        
+      }else if("salmon" == state && removed == "trout"){
+        setRemoved("salmon") //div that we want removed
+        incrementCount();
+        removeTroutDiv();
+        removeSalmonDiv();
+        
+      }else if ("shark" == state && removed == "salmon"){
+        setRemoved("shark") //div that we want removed
+        incrementCount();
+        removeTroutDiv();
+        removeSalmonDiv();
+        removeSharkDiv();
+      }else if("tuna" == state && removed == "shark"){
+        setRemoved("tuna") //div that we want removed
+        incrementCount();
+        removeTroutDiv();
+        removeSalmonDiv();
+        removeSharkDiv();
+        removeTunaDiv();
+      }else if(removed !== state && !removed){ //if the removed index is not equal to the state
+        setRemoved("trout") //div that we want removed   //WHILE LOOP FOR THIS?
+        incorrectIncrementCount();
+        removeTroutDiv();
+       
+      } else if (removed !== state && removed == "trout"){
+        setRemoved("salmon") //div that we want removed   //WHILE LOOP FOR THIS?
+        incorrectIncrementCount();
+        removeTroutDiv();
+        removeSalmonDiv();
+        
+      } else if (removed !== state && removed == "salmon"){
+        setRemoved("shark") //div that we want removed   //WHILE LOOP FOR THIS?
+        incorrectIncrementCount();
+        removeTroutDiv();
+        removeSalmonDiv();
+        removeSharkDiv();
+      }
+     
     } 
     
+    console.log("removed:" + " " + removed)
 
-     
+    
+    //FIGURE OUT HOW TO FIT THE RESPONSES NOT EQUAL TO STATE
+    
+      
+          
      
       
-  }
+  
       
   //onSubmit will fire the handleSubmit function in the form tag
  //in the text input, onChange is fired after every key stroke, so the state is being changed to equal every key you hit
@@ -133,13 +177,13 @@ export const GameBoard = () => {
       </div>
       <div id="game-board">
         <div id="fish-container">
-          <img src={nextFishToName.url} alt={nextFishToName.name} />
+          <img src={fish.url} alt={fish.name} />
         </div>
       
         <form id="fish-guess-form" onSubmit={handleSubmit} >
         
           <label htmlFor="fish-guess">What kind of fish is this?</label>
-          <input type="text" name="fish-guess" onChange={(e) => setState(e.target.value)}  />
+          <input type="text" name="fish-guess"  onChange={e=> setState(e.target.value)}  />
         
           <input type="submit"   />
         
@@ -154,3 +198,6 @@ export const GameBoard = () => {
 };
 
 //COUNT WORKS.NOW MAP TO THE NEXT FISH
+
+
+//HOW TO CHANGE STATE OF NEXT FISH TO NAME?????
